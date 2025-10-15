@@ -32,16 +32,16 @@ export class GildedRose {
       } else if (item.name == BACKSTAGE_PASS) {
         if (item.quality < 50) {
           item.quality = item.quality + 1
-          if (item.name == BACKSTAGE_PASS) {
-            if (item.sellIn < 11) {
-              if (item.quality < 50) {
-                item.quality = item.quality + 1
-              }
+
+          if (item.sellIn < 11) {
+            if (item.quality < 50) {
+              item.quality = item.quality + 1
             }
-            if (item.sellIn < 6) {
-              if (item.quality < 50) {
-                item.quality = item.quality + 1
-              }
+          }
+
+          if (item.sellIn < 6) {
+            if (item.quality < 50) {
+              item.quality = item.quality + 1
             }
           }
         }
@@ -58,13 +58,11 @@ export class GildedRose {
           if (item.quality < 50) {
             item.quality = item.quality + 1
           }
+        } else if (item.name == BACKSTAGE_PASS) {
+          item.quality = item.quality - item.quality
         } else {
-          if (item.name == BACKSTAGE_PASS) {
-            item.quality = item.quality - item.quality
-          } else {
-            if (item.quality > 0) {
-              item.quality = item.quality - 1
-            }
+          if (item.quality > 0) {
+            item.quality = item.quality - 1
           }
         }
       }
