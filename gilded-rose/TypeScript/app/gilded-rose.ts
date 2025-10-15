@@ -35,44 +35,38 @@ export class GildedRose {
         if (item.quality < 50) {
           item.quality = item.quality + 1
         }
-      } else if (item.name == BACKSTAGE_PASS) {
-        if (item.quality < 50) {
-          item.quality = item.quality + 1
 
-          if (item.sellIn < DOUBLE_QUALITY_THRESHOLD) {
-            if (item.quality < 50) {
-              item.quality = item.quality + 1
-            }
-          }
-
-          if (item.sellIn < TRIPLE_QUALITY_THRESHOLD) {
-            if (item.quality < 50) {
-              item.quality = item.quality + 1
-            }
-          }
-        }
-      } else if (item.quality > 0) {
-        item.quality = item.quality - 1
-      }
-
-
-      if (item.name == AGED_BRIE) {
-        if (item.quality < 50) {
-          if (item.sellIn < 0) {
+        if (item.sellIn < 0) {
+          if (item.quality < 50) {
             item.quality = item.quality + 1
           }
         }
+
       } else if (item.name == BACKSTAGE_PASS) {
-        if (item.sellIn < 0) {
-
-          item.quality = item.quality - item.quality
+        if (item.quality < 50) {
+          item.quality = item.quality + 1
         }
-      } else {
-        if (item.sellIn < 0) {
 
-          if (item.quality > 0) {
-            item.quality = item.quality - 1
+        if (item.sellIn < DOUBLE_QUALITY_THRESHOLD) {
+          if (item.quality < 50) {
+            item.quality = item.quality + 1
           }
+        }
+
+        if (item.sellIn < TRIPLE_QUALITY_THRESHOLD) {
+          if (item.quality < 50) {
+            item.quality = item.quality + 1
+          }
+        }
+
+        if (item.sellIn < 0) {
+          item.quality = 0
+        }
+      } else if (item.quality > 0) {
+        item.quality = item.quality - 1
+
+        if (item.sellIn < 0) {
+          item.quality = item.quality - 1
         }
       }
     }
