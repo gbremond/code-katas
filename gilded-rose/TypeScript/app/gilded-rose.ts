@@ -17,6 +17,9 @@ const SULFURAS = 'Sulfuras, Hand of Ragnaros';
 const DOUBLE_QUALITY_THRESHOLD = 10;
 const TRIPLE_QUALITY_THRESHOLD = 5;
 
+const MAX_QUALITY = 50;
+const MIN_QUALITY = 0;
+
 export class GildedRose {
   items: Array<Item>;
 
@@ -45,7 +48,7 @@ export class GildedRose {
   private updateAgedBrie(item: Item) {
     increaseQuality(item);
 
-    if (item.sellIn < 0) {
+    if (isExpired(item)) {
       increaseQuality(item);
     }
   }
@@ -61,7 +64,7 @@ export class GildedRose {
       increaseQuality(item);
     }
 
-    if (item.sellIn < 0) {
+    if (isExpired(item)) {
       item.quality = 0
     }
   }
@@ -69,20 +72,24 @@ export class GildedRose {
   private updateNormalItem(item: Item) {
     decreaseQuality(item)
 
-    if (item.sellIn < 0) {
+    if (isExpired(item)) {
       decreaseQuality(item);
     }
   }
 }
 
 function increaseQuality(item: Item) {
-  if (item.quality < 50) {
+  if (item.quality < MAX_QUALITY) {
     item.quality = item.quality + 1
   }
 }
 
 function decreaseQuality(item: Item) {
-  if (item.quality > 0) {
+  if (item.quality > MIN_QUALITY) {
     item.quality = item.quality - 1
   }
+}
+
+function isExpired(item: Item) {
+  return item.sellIn < 0;
 }
