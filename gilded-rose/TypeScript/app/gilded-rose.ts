@@ -31,8 +31,8 @@ export class GildedRose {
     return this.items.map(item => this.updateItem(item))
   }
 
-  private updateItem(item: Item) {
-    if (item.name == SULFURAS) return;
+  private updateItem(item: Item): Item {
+    if (item.name == SULFURAS) return item;
 
     item.sellIn = item.sellIn - 1;
 
