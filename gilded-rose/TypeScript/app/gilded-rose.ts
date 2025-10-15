@@ -28,21 +28,23 @@ export class GildedRose {
   }
 
   updateQuality() {
-    for (let item of this.items) {
-      if (item.name == SULFURAS) continue;
+    return this.items.map(item => this.updateItem(item))
+  }
 
-      item.sellIn = item.sellIn - 1;
+  private updateItem(item: Item) {
+    if (item.name == SULFURAS) return;
 
-      if (item.name == AGED_BRIE) {
-        this.updateAgedBrie(item);
-      } else if (item.name == BACKSTAGE_PASS) {
-        this.updateBackstagePass(item);
-      } else {
-        this.updateNormalItem(item);
-      }
+    item.sellIn = item.sellIn - 1;
+
+    if (item.name == AGED_BRIE) {
+      this.updateAgedBrie(item);
+    } else if (item.name == BACKSTAGE_PASS) {
+      this.updateBackstagePass(item);
+    } else {
+      this.updateNormalItem(item);
     }
 
-    return this.items;
+    return item;
   }
 
   private updateAgedBrie(item: Item) {
