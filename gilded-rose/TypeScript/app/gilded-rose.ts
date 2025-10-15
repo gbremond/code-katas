@@ -14,6 +14,10 @@ const AGED_BRIE = 'Aged Brie';
 const BACKSTAGE_PASS = 'Backstage passes to a TAFKAL80ETC concert';
 const SULFURAS = 'Sulfuras, Hand of Ragnaros';
 
+const DOUBLE_QUALITY_THRESHOLD = 10;
+
+const TRIPLE_QUALITY_THRESHOLD = 5;
+
 export class GildedRose {
   items: Array<Item>;
 
@@ -25,6 +29,8 @@ export class GildedRose {
     for (let item of this.items) {
       if (item.name == SULFURAS) continue;
 
+      item.sellIn = item.sellIn - 1;
+
       if (item.name == AGED_BRIE) {
         if (item.quality < 50) {
           item.quality = item.quality + 1
@@ -33,13 +39,13 @@ export class GildedRose {
         if (item.quality < 50) {
           item.quality = item.quality + 1
 
-          if (item.sellIn < 11) {
+          if (item.sellIn < DOUBLE_QUALITY_THRESHOLD) {
             if (item.quality < 50) {
               item.quality = item.quality + 1
             }
           }
 
-          if (item.sellIn < 6) {
+          if (item.sellIn < TRIPLE_QUALITY_THRESHOLD) {
             if (item.quality < 50) {
               item.quality = item.quality + 1
             }
@@ -48,9 +54,6 @@ export class GildedRose {
       } else if (item.quality > 0) {
         item.quality = item.quality - 1
       }
-
-
-      item.sellIn = item.sellIn - 1;
 
 
       if (item.name == AGED_BRIE) {
