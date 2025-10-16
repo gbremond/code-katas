@@ -39,3 +39,9 @@ git subtree pull --prefix=gilded-rose/original \
 > Demo : https://www.youtube.com/watch?v=sZxL4uX9ioQ 
 
 This kata is great to work on refactoring and showing how automatic it can get with the right steps.
+
+### 📣 Tell Don't Ask - by Gabriele Tondi
+
+> Original Link : https://github.com/racingDeveloper/tell-dont-ask-kata
+
+Great Kata to discover the tell don't ask principle and prevent anemic domain.
