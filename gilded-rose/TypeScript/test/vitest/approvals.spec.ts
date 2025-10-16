@@ -18,9 +18,9 @@ describe('Gilded Rose Approval', () => {
     const gildedRose = new GildedRose(items);
 
     for (let i = 0; i < 40; i++) {
-      gildedRose.updateQuality()
+      const updatedItems = gildedRose.updateQuality()
 
-      expect(items).toMatchSnapshot()
+      expect(updatedItems).toMatchSnapshot()
     }
   })
 });

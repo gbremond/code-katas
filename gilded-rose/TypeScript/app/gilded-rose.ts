@@ -10,6 +10,16 @@ export class Item {
   }
 }
 
+const AGED_BRIE = 'Aged Brie';
+const BACKSTAGE_PASS = 'Backstage passes to a TAFKAL80ETC concert';
+const SULFURAS = 'Sulfuras, Hand of Ragnaros';
+
+const DOUBLE_QUALITY_THRESHOLD = 10;
+const TRIPLE_QUALITY_THRESHOLD = 5;
+
+const MAX_QUALITY = 50;
+const MIN_QUALITY = 0;
+
 export class GildedRose {
   items: Array<Item>;
 
@@ -18,52 +28,70 @@ export class GildedRose {
   }
 
   updateQuality() {
-    for (let i = 0; i < this.items.length; i++) {
-      if (this.items[i].name != 'Aged Brie' && this.items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
-        if (this.items[i].quality > 0) {
-          if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
-            this.items[i].quality = this.items[i].quality - 1
-          }
-        }
-      } else {
-        if (this.items[i].quality < 50) {
-          this.items[i].quality = this.items[i].quality + 1
-          if (this.items[i].name == 'Backstage passes to a TAFKAL80ETC concert') {
-            if (this.items[i].sellIn < 11) {
-              if (this.items[i].quality < 50) {
-                this.items[i].quality = this.items[i].quality + 1
-              }
-            }
-            if (this.items[i].sellIn < 6) {
-              if (this.items[i].quality < 50) {
-                this.items[i].quality = this.items[i].quality + 1
-              }
-            }
-          }
-        }
-      }
-      if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
-        this.items[i].sellIn = this.items[i].sellIn - 1;
-      }
-      if (this.items[i].sellIn < 0) {
-        if (this.items[i].name != 'Aged Brie') {
-          if (this.items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
-            if (this.items[i].quality > 0) {
-              if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
-                this.items[i].quality = this.items[i].quality - 1
-              }
-            }
-          } else {
-            this.items[i].quality = this.items[i].quality - this.items[i].quality
-          }
-        } else {
-          if (this.items[i].quality < 50) {
-            this.items[i].quality = this.items[i].quality + 1
-          }
-        }
-      }
+    return this.items.map(item => this.updateItem(item))
+  }
+
+  private updateItem(item: Item): Item {
+    if (item.name == SULFURAS) return item;
+
+    item.sellIn = item.sellIn - 1;
+
+    if (item.name == AGED_BRIE) {
+      this.updateAgedBrie(item);
+    } else if (item.name == BACKSTAGE_PASS) {
+      this.updateBackstagePass(item);
+    } else {
+      this.updateNormalItem(item);
     }
 
-    return this.items;
+    return item;
   }
+
+  private updateAgedBrie(item: Item) {
+    increaseQuality(item);
+
+    if (isExpired(item)) {
+      increaseQuality(item);
+    }
+  }
+
+  private updateBackstagePass(item: Item) {
+    increaseQuality(item);
+
+    if (item.sellIn < DOUBLE_QUALITY_THRESHOLD) {
+      increaseQuality(item);
+    }
+
+    if (item.sellIn < TRIPLE_QUALITY_THRESHOLD) {
+      increaseQuality(item);
+    }
+
+    if (isExpired(item)) {
+      item.quality = 0
+    }
+  }
+
+  private updateNormalItem(item: Item) {
+    decreaseQuality(item)
+
+    if (isExpired(item)) {
+      decreaseQuality(item);
+    }
+  }
+}
+
+function increaseQuality(item: Item) {
+  if (item.quality < MAX_QUALITY) {
+    item.quality = item.quality + 1
+  }
+}
+
+function decreaseQuality(item: Item) {
+  if (item.quality > MIN_QUALITY) {
+    item.quality = item.quality - 1
+  }
+}
+
+function isExpired(item: Item) {
+  return item.sellIn < 0;
 }
