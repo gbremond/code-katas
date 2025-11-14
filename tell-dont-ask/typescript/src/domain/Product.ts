@@ -1,33 +1,33 @@
 import Category from './Category';
 
 class Product {
-  private name: string;
-  private price: number;
-  private category: Category;
+    private readonly unitaryTax: number
+    private readonly unitaryTaxedAmount: number
 
-  public getName(): string {
-    return this.name;
-  }
+    constructor(
+        private name: string,
+        private price: number,
+        private category: Category
+    ) {
+        this.unitaryTax = Math.round(this.price / 100 * this.category.getTaxPercentage() * 100) / 100
+        this.unitaryTaxedAmount = Math.round((this.price + this.unitaryTax) * 100) / 100;
+    }
 
-  public setName(name: string): void {
-    this.name = name;
-  }
+    public getUnitaryTax() {
+        return this.unitaryTax
+    }
 
-  public getPrice(): number {
-    return this.price;
-  }
+    public getUnitaryTaxedAmount() {
+        return this.unitaryTaxedAmount
+    }
 
-  public setPrice(price: number): void {
-    this.price = price;
-  }
+    public getName(): string {
+        return this.name;
+    }
 
-  public getCategory(): Category {
-    return this.category;
-  }
-
-  public setCategory(category: Category): void {
-    this.category = category;
-  }
+    public getPrice(): number {
+        return this.price;
+    }
 }
 
 export default Product;

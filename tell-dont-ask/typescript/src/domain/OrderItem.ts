@@ -8,10 +8,8 @@ class OrderItem {
       private readonly product: Product,
       private readonly quantity: number,
   ) {
-      const unitaryTax: number = Math.round(product.getPrice() / 100 * product.getCategory().getTaxPercentage() * 100) / 100;
-      const unitaryTaxedAmount: number = Math.round((product.getPrice() + unitaryTax) * 100) / 100;
-      const taxedAmount: number = Math.round(unitaryTaxedAmount * quantity * 100) / 100;
-      const taxAmount: number = unitaryTax * quantity;
+      const taxedAmount: number = Math.round(product.getUnitaryTaxedAmount() * quantity * 100) / 100;
+      const taxAmount: number = product.getUnitaryTax() * quantity;
 
       this.taxedAmount = taxedAmount;
       this.tax = taxAmount;
