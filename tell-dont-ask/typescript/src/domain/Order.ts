@@ -12,9 +12,9 @@ class Order {
     private tax: number = 0;
 
     constructor(
-        private id: number = 1,
+        private readonly id: number = 1,
         private status = OrderStatus.CREATED,
-        private currency: string = 'EUR',
+        private readonly currency: string = 'EUR',
     ) {
     }
 

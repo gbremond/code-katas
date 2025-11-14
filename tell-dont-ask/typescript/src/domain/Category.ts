@@ -1,7 +1,7 @@
 class Category {
     constructor(
-        private name: string,
-        private taxPercentage: number
+        private readonly name: string,
+        private readonly taxPercentage: number
     ) {
     }
 
