@@ -2,9 +2,9 @@ import Order from '../domain/Order';
 import { OrderStatus } from '../domain/OrderStatus';
 import OrderRepository from '../repository/OrderRepository';
 import { ShipmentService } from '../service/ShipmentService';
-import OrderCannotBeShippedException from './OrderCannotBeShippedException';
-import OrderCannotBeShippedTwiceException from './OrderCannotBeShippedTwiceException';
-import OrderShipmentRequest from './OrderShipmentRequest';
+import OrderCannotBeShippedException from './exception/OrderCannotBeShippedException';
+import OrderCannotBeShippedTwiceException from './exception/OrderCannotBeShippedTwiceException';
+import OrderShipmentRequest from './request/OrderShipmentRequest';
 
 class OrderShipmentUseCase {
   private readonly orderRepository: OrderRepository;

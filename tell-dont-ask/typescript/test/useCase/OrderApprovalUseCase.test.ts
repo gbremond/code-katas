@@ -1,10 +1,10 @@
 import Order from '../../src/domain/Order';
 import { OrderStatus } from '../../src/domain/OrderStatus';
-import ApprovedOrderCannotBeRejectedException from '../../src/useCase/ApprovedOrderCannotBeRejectedException';
-import OrderApprovalRequest from '../../src/useCase/OrderApprovalRequest';
+import ApprovedOrderCannotBeRejectedException from '../../src/useCase/exception/ApprovedOrderCannotBeRejectedException';
+import OrderApprovalRequest from '../../src/useCase/request/OrderApprovalRequest';
 import OrderApprovalUseCase from '../../src/useCase/OrderApprovalUseCase';
-import RejectedOrderCannotBeApprovedException from '../../src/useCase/RejectedOrderCannotBeApprovedException';
-import ShippedOrdersCannotBeChangedException from '../../src/useCase/ShippedOrdersCannotBeChangedException';
+import RejectedOrderCannotBeApprovedException from '../../src/useCase/exception/RejectedOrderCannotBeApprovedException';
+import ShippedOrdersCannotBeChangedException from '../../src/useCase/exception/ShippedOrdersCannotBeChangedException';
 import TestOrderRepository from '../doubles/TestOrderRepository';
 
 describe('OrderApprovalUseCase', () => {

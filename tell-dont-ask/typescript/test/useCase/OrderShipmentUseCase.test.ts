@@ -1,8 +1,8 @@
 import Order from "../../src/domain/Order";
 import { OrderStatus } from "../../src/domain/OrderStatus";
-import OrderCannotBeShippedException from "../../src/useCase/OrderCannotBeShippedException";
-import OrderCannotBeShippedTwiceException from "../../src/useCase/OrderCannotBeShippedTwiceException";
-import OrderShipmentRequest from "../../src/useCase/OrderShipmentRequest";
+import OrderCannotBeShippedException from "../../src/useCase/exception/OrderCannotBeShippedException";
+import OrderCannotBeShippedTwiceException from "../../src/useCase/exception/OrderCannotBeShippedTwiceException";
+import OrderShipmentRequest from "../../src/useCase/request/OrderShipmentRequest";
 import OrderShipmentUseCase from "../../src/useCase/OrderShipmentUseCase";
 import TestOrderRepository from "../doubles/TestOrderRepository";
 import TestShipmentService from "../doubles/TestShipmentService";
