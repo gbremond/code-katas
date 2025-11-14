@@ -2,43 +2,34 @@ import Order from '../domain/Order';
 import OrderItem from '../domain/OrderItem';
 import Product from '../domain/Product';
 import OrderRepository from '../repository/OrderRepository';
-import { ProductCatalog } from '../repository/ProductCatalog';
+import {ProductCatalog} from '../repository/ProductCatalog';
 import SellItemsRequest from './request/SellItemsRequest';
 import UnknownProductException from './exception/UnknownProductException';
 
 class OrderCreationUseCase {
-  private readonly orderRepository: OrderRepository;
-  private readonly productCatalog: ProductCatalog;
+    private readonly orderRepository: OrderRepository;
+    private readonly productCatalog: ProductCatalog;
 
-  public constructor(orderRepository: OrderRepository, productCatalog: ProductCatalog) {
-    this.orderRepository = orderRepository;
-    this.productCatalog = productCatalog;
-  }
-
-  public run(request: SellItemsRequest): void {
-    const order: Order = new Order();
-    order.setItems([]);
-    order.setCurrency('EUR');
-    order.setTotal(0);
-    order.setTax(0);
-
-    for (const itemRequest of request.getRequests()) {
-       const product: Product = this.productCatalog.getByName(itemRequest.getProductName());
-
-      if (product === undefined) {
-        throw new UnknownProductException();
-      }
-      else {
-        const orderItem: OrderItem = new OrderItem(product, itemRequest.getQuantity());
-        order.getItems().push(orderItem);
-
-        order.setTotal(order.getTotal() + orderItem.getTaxedAmount());
-        order.setTax(order.getTax() + orderItem.getTax());
-      }
+    public constructor(orderRepository: OrderRepository, productCatalog: ProductCatalog) {
+        this.orderRepository = orderRepository;
+        this.productCatalog = productCatalog;
     }
 
-    this.orderRepository.save(order);
-  }
+    public run(request: SellItemsRequest): void {
+        const order: Order = new Order();
+
+        for (const itemRequest of request.getRequests()) {
+            const product: Product = this.productCatalog.getByName(itemRequest.getProductName());
+
+            if (product === undefined) {
+                throw new UnknownProductException();
+            } else {
+                order.addItem(new OrderItem(product, itemRequest.getQuantity()));
+            }
+        }
+
+        this.orderRepository.save(order);
+    }
 }
 
 export default OrderCreationUseCase;

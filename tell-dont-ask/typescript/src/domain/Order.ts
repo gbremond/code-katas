@@ -7,48 +7,38 @@ import OrderCannotBeShippedException from "../useCase/exception/OrderCannotBeShi
 import OrderCannotBeShippedTwiceException from "../useCase/exception/OrderCannotBeShippedTwiceException";
 
 class Order {
-    private total: number;
-    private currency: string;
-    private items: OrderItem[];
-    private tax: number;
+    private items: OrderItem[] = [];
+    private total: number = 0;
+    private tax: number = 0;
 
     constructor(
         private id: number = 1,
         private status = OrderStatus.CREATED,
+        private currency: string = 'EUR',
     ) {
     }
 
+    public addItem(orderItem: OrderItem) {
+        this.total += orderItem.getTaxedAmount();
+        this.tax += orderItem.getTax()
+
+        this.items.push(orderItem);
+    }
 
     public getTotal(): number {
         return this.total;
-    }
-
-    public setTotal(total: number): void {
-        this.total = total;
     }
 
     public getCurrency(): string {
         return this.currency;
     }
 
-    public setCurrency(currency: string): void {
-        this.currency = currency;
-    }
-
     public getItems(): OrderItem[] {
         return this.items;
     }
 
-    public setItems(items: OrderItem[]): void {
-        this.items = items;
-    }
-
     public getTax(): number {
         return this.tax;
-    }
-
-    public setTax(tax: number): void {
-        this.tax = tax;
     }
 
     public getStatus(): OrderStatus {
@@ -57,10 +47,6 @@ class Order {
 
     public getId(): number {
         return this.id;
-    }
-
-    public setId(id: number): void {
-        this.id = id;
     }
 
     public hasBeenShipped(): boolean {
