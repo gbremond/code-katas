@@ -29,20 +29,11 @@ class OrderCreationUseCase {
         throw new UnknownProductException();
       }
       else {
-        const unitaryTax: number = Math.round(product.getPrice() / 100 * product.getCategory().getTaxPercentage() * 100) / 100;
-        const unitaryTaxedAmount: number = Math.round((product.getPrice() + unitaryTax) * 100) / 100;
-        const taxedAmount: number = Math.round(unitaryTaxedAmount * itemRequest.getQuantity() * 100) / 100;
-        const taxAmount: number = unitaryTax * itemRequest.getQuantity();
-
-        const orderItem: OrderItem = new OrderItem();
-        orderItem.setProduct(product);
-        orderItem.setQuantity(itemRequest.getQuantity());
-        orderItem.setTax(taxAmount);
-        orderItem.setTaxedAmount(taxedAmount);
+        const orderItem: OrderItem = new OrderItem(product, itemRequest.getQuantity());
         order.getItems().push(orderItem);
 
-        order.setTotal(order.getTotal() + taxedAmount);
-        order.setTax(order.getTax() + taxAmount);
+        order.setTotal(order.getTotal() + orderItem.getTaxedAmount());
+        order.setTax(order.getTax() + orderItem.getTax());
       }
     }
 
