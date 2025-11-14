@@ -23,9 +23,9 @@ class OrderCreationUseCase {
 
             if (product === undefined) {
                 throw new UnknownProductException();
-            } else {
-                order.addItem(new OrderItem(product, itemRequest.getQuantity()));
             }
+
+            order.addItem(new OrderItem(product, itemRequest.getQuantity()));
         }
 
         this.orderRepository.save(order);
