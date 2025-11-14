@@ -3,6 +3,8 @@ import {OrderStatus} from './OrderStatus';
 import RejectedOrderCannotBeApprovedException from "../useCase/exception/RejectedOrderCannotBeApprovedException";
 import ApprovedOrderCannotBeRejectedException from "../useCase/exception/ApprovedOrderCannotBeRejectedException";
 import ShippedOrdersCannotBeChangedException from "../useCase/exception/ShippedOrdersCannotBeChangedException";
+import OrderCannotBeShippedException from "../useCase/exception/OrderCannotBeShippedException";
+import OrderCannotBeShippedTwiceException from "../useCase/exception/OrderCannotBeShippedTwiceException";
 
 class Order {
     private total: number;
@@ -91,6 +93,22 @@ class Order {
         if (this.isApproved()) throw new ApprovedOrderCannotBeRejectedException();
 
         this.status = OrderStatus.REJECTED;
+    }
+
+    public canBeShipped() {
+        if (this.status === OrderStatus.CREATED || this.status === OrderStatus.REJECTED) {
+            throw new OrderCannotBeShippedException();
+        }
+
+        if (this.status === OrderStatus.SHIPPED) {
+            throw new OrderCannotBeShippedTwiceException();
+        }
+    }
+
+    public ship() {
+        this.canBeShipped()
+
+        this.status = OrderStatus.SHIPPED;
     }
 }
 
