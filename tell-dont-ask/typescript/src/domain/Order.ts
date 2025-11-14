@@ -9,8 +9,13 @@ class Order {
     private currency: string;
     private items: OrderItem[];
     private tax: number;
-    private status: OrderStatus;
-    private id: number;
+
+    constructor(
+        private id: number = 1,
+        private status = OrderStatus.CREATED,
+    ) {
+    }
+
 
     public getTotal(): number {
         return this.total;
