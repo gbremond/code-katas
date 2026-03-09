@@ -45,3 +45,9 @@ This kata is great to work on refactoring and showing how automatic it can get w
 > Original Link : https://github.com/racingDeveloper/tell-dont-ask-kata
 
 Great Kata to discover the tell don't ask principle and prevent anemic domain.
+
+### 🃏 Poker Hands - by Matthew D Moss
+
+> Original Link : https://codingdojo.org/kata/PokerHands/
+
+TO DO
