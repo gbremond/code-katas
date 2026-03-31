@@ -1,22 +1,17 @@
 class Category {
-  private name: string;
-  private taxPercentage: number;
+    constructor(
+        private readonly name: string,
+        private readonly taxPercentage: number
+    ) {
+    }
 
-  public getName(): string {
-      return this.name;
-  }
+    public getName(): string {
+        return this.name;
+    }
 
-  public setName(name: string): void {
-      this.name = name;
-  }
-
-  public getTaxPercentage(): number {
-      return this.taxPercentage;
-  }
-
-  public setTaxPercentage(taxPercentage: number) {
-      this.taxPercentage = taxPercentage;
-  }
+    public getTaxPercentage(): number {
+        return this.taxPercentage;
+    }
 }
 
 export default Category;

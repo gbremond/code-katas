@@ -4,26 +4,18 @@ import { OrderStatus } from '../../src/domain/OrderStatus';
 import Product from '../../src/domain/Product';
 import { ProductCatalog } from '../../src/repository/ProductCatalog';
 import OrderCreationUseCase from '../../src/useCase/OrderCreationUseCase';
-import SellItemRequest from '../../src/useCase/SellItemRequest';
-import SellItemsRequest from '../../src/useCase/SellItemsRequest';
-import UnknownProductException from '../../src/useCase/UnknownProductException';
+import SellItemRequest from '../../src/useCase/request/SellItemRequest';
+import SellItemsRequest from '../../src/useCase/request/SellItemsRequest';
+import UnknownProductException from '../../src/useCase/exception/UnknownProductException';
 import InMemoryProductCatalog from '../doubles/InMemoryProductCatalog';
 import TestOrderRepository from '../doubles/TestOrderRepository';
 
 describe('OrderApprovalUseCase', () => {
   const orderRepository: TestOrderRepository = new TestOrderRepository();
-  let food: Category = new Category();
-  food.setName('food');
-  food.setTaxPercentage(10);
+  let food: Category = new Category('food', 10);
 
-  const saladProduct = new Product();
-  saladProduct.setName('salad');
-  saladProduct.setPrice(3.56);
-  saladProduct.setCategory(food);
-  const tomatoProduct = new Product();
-  tomatoProduct.setName('tomato');
-  tomatoProduct.setPrice(4.65);
-  tomatoProduct.setCategory(food);
+  const saladProduct = new Product('salad', 3.56, food);
+  const tomatoProduct = new Product('tomato', 4.65, food);
   const productCatalog: ProductCatalog = new InMemoryProductCatalog([ saladProduct, tomatoProduct]);
   const useCase: OrderCreationUseCase = new OrderCreationUseCase(orderRepository, productCatalog);
 
